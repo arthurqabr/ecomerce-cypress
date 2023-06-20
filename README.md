@@ -1,1 +1,1 @@
-# saucedemo-cypress
+# ecomerce-cypress
