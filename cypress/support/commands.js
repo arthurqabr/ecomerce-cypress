@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -24,4 +25,24 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add('acessNaveeAutomation', () => {
 
+    cy.visit('/');
+    // Cypress.on(
+    //     "uncaught:exception", (err, runnable) => true
+    // );
+});//Função realiza acesso a plataforma(tratando erros)
+
+Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone) =>{
+    cy.get(".caret").click();
+    cy.contains("Register").click();
+    cy.contains("Register Account").should("be.visible");
+    cy.get('#input-firstname').type(firstName)
+    cy.get('#input-lastname').type(lastName)
+    cy.get('#input-email').type(email)
+    cy.get('#input-telephone').type(phone)
+    cy.get('#input-password').type('P@ssw0rd')
+    cy.get('#input-confirm').type('P@ssw0rd')
+    cy.log('------completed data------')
+    cy.get("label input[type='radio']").check("1", { force: true });
+})

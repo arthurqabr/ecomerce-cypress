@@ -3,6 +3,7 @@
     "cypress": "^12.14.0"
   },
   "devDependencies": {
-    "@applitools/eyes-cypress": "^3.33.1"
+    "@applitools/eyes-cypress": "^3.33.1",
+    "faker": "^5.5.3"
   }
 }
