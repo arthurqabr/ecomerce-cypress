@@ -44,5 +44,9 @@ Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone) =>{
     cy.get('#input-password').type('P@ssw0rd')
     cy.get('#input-confirm').type('P@ssw0rd')
     cy.log('------completed data------')
-    cy.get("label input[type='radio']").check("1", { force: true });
+    cy.get("label input[type='radio']").check('1', { force: true });
+    cy.get('[type="checkbox"]').check('1')
+    cy.get('[type="checkbox"]').should('be.checked')
+    cy.contains('Continue').click()
+    cy.contains('Your Account Has Been Created!').should('be.visible')
 })

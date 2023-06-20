@@ -9,6 +9,6 @@ describe("New user features", () => {
   });
 
   it("Creating a new user successfully", () => {
-    cy.setNewUserFields(firstName, lastName, email, phone);
+    cy.setNewUserFields(firstName, lastName, email, phone); // this is a command in /e2e/support/commands.js
   });
 });
