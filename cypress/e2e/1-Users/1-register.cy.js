@@ -9,6 +9,12 @@ describe("New user features", () => {
   });
 
   it("Creating a new user successfully", () => {
-    cy.setNewUserFields(firstName, lastName, email, phone); // this is a command in /e2e/support/commands.js
+    cy.setNewUserFields(firstName, lastName, email, phone, 'P@ssw0rd', 'P@ssw0rd'); // this is a command in /e2e/support/commands.js
+    cy.contains('Your Account Has Been Created!').should('be.visible')
+  });
+
+  it("Creating a new user with e-mail address already registered", () => {
+    cy.setNewUserFields(firstName, lastName, email, phone, 'P@ssw0rd', 'P@ssw0rd');
+    cy.contains('Warning: E-Mail Address is already registered!').should('be.visible')
   });
 });

@@ -33,7 +33,7 @@ Cypress.Commands.add('acessNaveeAutomation', () => {
     // );
 });//Função realiza acesso a plataforma(tratando erros)
 
-Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone) =>{
+Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone, password, confPassword) =>{
     cy.get(".caret").click();
     cy.contains("Register").click();
     cy.contains("Register Account").should("be.visible");
@@ -41,12 +41,11 @@ Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone) =>{
     cy.get('#input-lastname').type(lastName)
     cy.get('#input-email').type(email)
     cy.get('#input-telephone').type(phone)
-    cy.get('#input-password').type('P@ssw0rd')
-    cy.get('#input-confirm').type('P@ssw0rd')
+    cy.get('#input-password').type(password)
+    cy.get('#input-confirm').type(confPassword)
     cy.log('------completed data------')
     cy.get("label input[type='radio']").check('1', { force: true });
     cy.get('[type="checkbox"]').check('1')
     cy.get('[type="checkbox"]').should('be.checked')
     cy.contains('Continue').click()
-    cy.contains('Your Account Has Been Created!').should('be.visible')
 })
