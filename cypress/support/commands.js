@@ -43,9 +43,13 @@ Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone, pas
     cy.get('#input-telephone').type(phone)
     cy.get('#input-password').type(password)
     cy.get('#input-confirm').type(confPassword)
-    cy.log('------completed data------')
+    cy.log('------/ Assertions /------')
+    cy.get('#input-firstname').should('have.value', firstName)
+    cy.get('#input-lastname').should('have.value', lastName)
     cy.get("label input[type='radio']").check('1', { force: true });
-    cy.get('[type="checkbox"]').check('1')
-    cy.get('[type="checkbox"]').should('be.checked')
+    cy.get('[type="checkbox"], [name="agree"]').check('1')
+    cy.get('[type="checkbox"], [name="agree"]').should('be.checked')
     cy.contains('Continue').click()
+
+    // TODO: create all fields assertions
 })

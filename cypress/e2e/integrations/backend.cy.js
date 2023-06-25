@@ -34,10 +34,13 @@ describe("Should test API", () => {
         expect(res.body.email).to.eq(email);
         createdUserId = res.body.id;
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res);
+        console.log(createdUserId)
+      })
   });
 
-  it("should get user details by random ID", () => {
+  it.only("should get user details by random ID", () => { // Os dados do usuário estarão disponíveis no CONSOLE do navegador.
     cy.request({
       method: "GET",
       url: "https://gorest.co.in/public/v2/users",
@@ -46,31 +49,32 @@ describe("Should test API", () => {
           "Bearer 6916c4726abd10bcc789b6c10f5e372da8b2e60b846ca1b192cf83cd74da2616",
       },
     }).then((res) => {
-      const userList = res.body.data || [];
-      console.log(userList);
+      expect(res.status).to.eq(200); 
   
-      if (userList.length > 0) {
-        // Selecionar aleatoriamente um usuário da lista
-        const randomUser = Cypress._.sample(userList);
-        const randomUserId = randomUser.id;
-        console.log(`ID do usuário aleatório: ${randomUserId}`);
+      const users = res.body; 
+      expect(users).to.not.be.empty; 
   
-        cy.request({
-          method: "GET",
-          url: `https://gorest.co.in/public/v2/users/${randomUserId}`,
-          headers: {
-            Authorization:
-              "Bearer 6916c4726abd10bcc789b6c10f5e372da8b2e60b846ca1b192cf83cd74da2616",
-          },
-        }).then((userRes) => {
-          expect(userRes.status).to.eq(200);
-          expect(userRes.body.data.id).to.eq(randomUserId);
-          cy.log(userRes.body.data); 
-          console.log(userRes.body.data);
-        });
-      } else {
-        console.log("A lista de usuários está vazia.");
-      }
+      const randomUser = Cypress._.sample(users); 
+  
+      const userId = randomUser.id; 
+  
+      expect(userId).to.not.be.null; 
+  
+      cy.log(`User ID: ${userId}`); 
+  
+      cy.request({
+        method: "GET",
+        url: `https://gorest.co.in/public/v2/users/${userId}`,
+        headers: {
+          Authorization:
+            "Bearer 6916c4726abd10bcc789b6c10f5e372da8b2e60b846ca1b192cf83cd74da2616",
+        },
+      }).then((res) => {
+        expect(res.status).to.eq(200); 
+        expect(res.body.id).to.eq(userId);
+        cy.log(`Random user Data with ID ${userId} avaliable in console. Press F12 or Inspect browser`)
+        console.log(res.body) 
+      });
     });
   });
   
