@@ -10,7 +10,7 @@ describe("Login test", () => {
     cy.contains('My Account').should('be.visible')
   });
 
-  it.only("Should validate error messages in input fields", () => {
+  it("Should validate error messages in input fields", () => {
     cy.setLoginData('arthur.o.carvalho@gmail.co', 'P@ssw0rd')
     cy.contains('Warning: No match for E-Mail Address and/or Password.').should('be.visible')
   });
