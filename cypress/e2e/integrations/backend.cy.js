@@ -40,7 +40,7 @@ describe("Should test API", () => {
       })
   });
 
-  it.only("should get user details by random ID", () => { // Os dados do usuário estarão disponíveis no CONSOLE do navegador.
+  it("should get user details by random ID", () => { // Os dados do usuário estarão disponíveis no CONSOLE do navegador.
     cy.request({
       method: "GET",
       url: "https://gorest.co.in/public/v2/users",
@@ -72,7 +72,7 @@ describe("Should test API", () => {
       }).then((res) => {
         expect(res.status).to.eq(200); 
         expect(res.body.id).to.eq(userId);
-        cy.log(`Random user Data with ID ${userId} avaliable in console. Press F12 or Inspect browser`)
+        cy.log(`Random user Data with ID **${userId}** avaliable in console. Press F12 or Inspect browser`)
         console.log(res.body) 
       });
     });
@@ -94,6 +94,17 @@ describe("Should test API", () => {
       console.log(res);
       expect(res.status).to.eq(204);
       cy.log(`StatusText: ${res.statusText}`);
+
+      cy.log('------ Getting the status 404 with new GET in the deleted user -----')
+      cy.request({
+        method: "GET",
+        url: `https://gorest.co.in/public/v2/users/${createdUserId}`,
+        failOnStatusCode: false,
+      }).then((resDel => {
+        expect(resDel.status).to.eq(404)
+        cy.log('404 not found. The user has been deleted successfuly')
+      }))
     });
+
   });
 });
