@@ -21,7 +21,7 @@ describe("New user features", () => {
     cy.contains('Warning: E-Mail Address is already registered!').should('be.visible')
   });
 
-  it.only("Should validate error messages in input fields", () => {
+  it("Should validate error messages in input fields", () => {
     cy.setNewUserFields(firstName, lastName, email, phone, 'P@ssw0rd', 'P@ssw0r');
     cy.contains('Password confirmation does not match password!').should('be.visible')
     cy.get('#input-firstname').clear(); // Limpa o valor existente e digita uma string vazia
