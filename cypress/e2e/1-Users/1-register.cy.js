@@ -11,12 +11,12 @@ describe("New user features", () => {
     cy.acessNaveeAutomation();
   });
 
-  it("Creating a random user successfully", () => {
+  it("Should create a random user successfully", () => {
     cy.setNewUserFields(firstName, lastName, email, phone, 'P@ssw0rd', 'P@ssw0rd'); // this is a command in /e2e/support/commands.js
     cy.contains('Your Account Has Been Created!').should('be.visible')
   });
 
-  it("Creating a new user with e-mail address already registered", () => {
+  it("Should create a new user with e-mail address already registered", () => {
     cy.setNewUserFields(firstName, lastName, email, phone, 'P@ssw0rd', 'P@ssw0rd');
     cy.contains('Warning: E-Mail Address is already registered!').should('be.visible')
   });
@@ -35,7 +35,7 @@ describe("New user features", () => {
     cy.contains('Telephone must be between 3 and 32 characters!').should('be.visible')
   });
 
-  it('Creating a default user', () => {
+  it('Should create a default user', () => {
     cy.setNewUserFields('Arthur', 'Carvalho', existingUserEmail, '31992811966', 'P@ssw0rd', 'P@ssw0rd');
   });
   

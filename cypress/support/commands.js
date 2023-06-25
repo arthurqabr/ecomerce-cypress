@@ -33,6 +33,18 @@ Cypress.Commands.add('acessNaveeAutomation', () => {
     // );
 });//Função realiza acesso a plataforma(tratando erros)
 
+Cypress.Commands.add('setLoginData', (email, password) =>{
+    cy.get('.caret').click()
+    cy.contains('Login').click()
+    cy.url().should('include', 'index.php?route=account/login');
+    cy.contains('Returning Customer').should('be.visible')
+    cy.get('#input-email').type(email)
+    cy.get('#input-email').should('have.value', email)
+    cy.get('#input-password').type(password)
+    cy.get('#input-password').should('have.value', password)
+    cy.get('[type=submit][value=Login]').click()
+})
+
 Cypress.Commands.add('setNewUserFields', (firstName, lastName, email, phone, password, confPassword) =>{
     cy.get(".caret").click();
     cy.contains("Register").click();
