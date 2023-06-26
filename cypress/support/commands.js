@@ -1,29 +1,4 @@
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("acessNaveeAutomation", () => {
   cy.visit("/");
@@ -72,7 +47,53 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add("setProductInSearchBar", (item) => {
-  cy.get('#search').type(`${item}{enter}`);
+  cy.get("#search").type(`${item}{enter}`);
   cy.contains(`Search - ${item}`);
-  cy.get('div [class=row]:eq(4)').contains(item, { matchCase: false})
+  cy.get("div [class=row]:eq(4)").contains(item, { matchCase: false });
 });
+
+let productName;
+let productPrice;
+Cypress.Commands.add("addItemBag", (item) => {
+  cy.setProductInSearchBar(item);
+  cy.get("div [class=row]:eq(4) a:eq(1)").click();
+  cy.contains("Description").should("be.visible");
+  cy.contains("Reviews").should("be.visible");
+    cy.get("h1")
+      .invoke("text")
+      .then((prodName) => {
+        productName = prodName;
+      });
+    cy.get("li h2")
+      .invoke("text")
+      .then((pricProd) => {
+        productPrice = pricProd.replace(/\$|\s/g, "");
+      });
+  cy.wrap(null).then(() => {
+    console.log(productName, productPrice);
+    cy.log(`**Product Name: ${productName}**`);
+    cy.log(`**Product Price: $${productPrice}**`);
+  });
+  cy.wrap(null).then(() => {
+    cy.get("#button-cart").click();
+    cy.contains(`Success: You have added ${productName} to your shopping cart!`);
+    cartTotal += parseFloat(productPrice)
+    cartTotal = Number(cartTotal.toFixed(2));
+  })
+  cy.get('[name=search]').clear()
+});
+
+let cartTotal = 0;
+Cypress.Commands.add("getCartTotalIcon", () => {
+    console.log(`Valor total: ${cartTotal}`)
+    cy.get('#cart-total').contains(cartTotal)
+  });
+
+Cypress.Commands.add("getCartTotal", () => {
+    cy.get('#cart-total').click()
+    cy.contains('View Cart').click()
+    cy.get('table[class="table table-bordered"]:eq(2)').contains(cartTotal)
+  });
+  
+
+

@@ -11,7 +11,7 @@ describe("Login test", () => {
   });
 
   it("Should validate error messages in input fields", () => {
-    cy.setLoginData('arthur.o.clho@gmail.co', 'P@ssw0rd')
+    cy.setLoginData('arthur.o.carvalho@gmail.c', 'P@ssw0rd')
     cy.contains('Warning: No match for E-Mail Address and/or Password.').should('be.visible');
   });
 });
